@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Textbox from './Textbox';
+import { height } from '@material-ui/system';
+import Total from './Total';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const ColoredLine = ({ color }) => (
+  <hr
+    style={{
+      color: color,
+      backgroundColor: color,
+      height: 2
+    }}
+  />
+);
+
+var total = [];
+var summ;
+export default class App extends Component {
+
+  constructor(props) {
+    super(props)
+    this.handleKeyPress = this.handleKeyPress.bind();
+    this.sum = 0;
+  }
+
+  handleKeyPress(event) {
+
+    if (event.key === 'Enter') {
+      total.push(parseInt(event.target.value));
+      event.target.value = null;
+      summ = total.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue
+      }, 0);
+    }
+    console.log(summ);
+  }
+  
+
+  render() {
+    return (
+      <div>
+        <CssBaseline />
+        <Container fixed maxWidth="sm">
+          <Textbox
+            handleKeyPress={this.handleKeyPress}
+          />
+          <h3>Total : </h3>
+          <Total
+            value={summ}
+          />
+          <ColoredLine color="black" />
+
+        </Container>
+      </div>
+    );
+  }
 }
-
-export default App;
