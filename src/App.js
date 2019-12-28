@@ -22,8 +22,10 @@ export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.handleKeyPress = this.handleKeyPress.bind();
-    this.sum = 0;
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.state={
+      sum: 0
+    };
   }
 
   handleKeyPress(event) {
@@ -34,10 +36,12 @@ export default class App extends Component {
       summ = total.reduce((accumulator, currentValue) => {
         return accumulator + currentValue
       }, 0);
+      this.setState({
+        sum:summ
+      })
     }
-    console.log(summ);
   }
-  
+
 
   render() {
     return (
@@ -49,10 +53,9 @@ export default class App extends Component {
           />
           <h3>Total : </h3>
           <Total
-            value={summ}
+            value={this.state.sum}
           />
           <ColoredLine color="black" />
-
         </Container>
       </div>
     );
